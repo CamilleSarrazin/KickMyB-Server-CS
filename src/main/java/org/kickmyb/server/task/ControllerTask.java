@@ -65,6 +65,15 @@ public class ControllerTask {
         return serviceTask.index();
     }
 
+    @PostMapping(value = "/api/delete/{id}", produces = "text/plain")
+    public @ResponseBody String softDeleteTask(@PathVariable long id){
+        System.out.println("KICKB SERVER : Soft delete with cookie ");
+        ConfigHTTP.attenteArticifielle();
+        MUser user = currentUser();
+        serviceTask.softDeleteTask(id, user);
+        return "";
+    }
+
     /**
      * Tester votre serveur
      */

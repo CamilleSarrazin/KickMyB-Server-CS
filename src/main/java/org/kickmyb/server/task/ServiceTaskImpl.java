@@ -102,6 +102,7 @@ public class ServiceTaskImpl implements ServiceTask {
             r.deadline = t.deadline;
             r.percentageTimeSpent = percentage(t.creationDate, new Date(), t.deadline);
             r.name = t.name;
+            t.isActive = true;
             res.add(r);
         }
         return res;
@@ -143,6 +144,7 @@ public class ServiceTaskImpl implements ServiceTask {
             r.deadline = t.deadline;
             r.percentageTimeSpent = percentage(t.creationDate, new Date(), t.deadline);
             r.name = t.name;
+            t.isActive = true;
             if(t.photo != null) {
                 r.photoId = t.photo.id;
             } else {
@@ -151,6 +153,19 @@ public class ServiceTaskImpl implements ServiceTask {
             res.add(r);
         }
         return res;
+    }
+
+    @Override
+    public void softDeleteTask(Long id, MUser user) {
+        //get l'id de la tâche qu'on souhaite supprimer
+        MTask element = user.tasks.stream().filter(elt -> elt.id == id).findFirst().get();
+
+        if(element != null){
+            element.isActive = false;
+            user.tasks.remove(element);
+            repoUser.save(user);
+            System.out.println(user.tasks);
+        }
     }
 
     @Override

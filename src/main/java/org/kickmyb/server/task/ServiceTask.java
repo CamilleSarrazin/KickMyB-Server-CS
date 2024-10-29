@@ -19,6 +19,8 @@ public interface ServiceTask {
     List<HomeItemResponse> home(Long userID);
     TaskDetailPhotoResponse detailPhoto(Long id, MUser user);
     List<HomeItemPhotoResponse> homePhoto(Long userID);
+    //soft delete la tâche d'un utilisateur
+    void softDeleteTask(Long id, MUser user);
 
     // Potential web demo for JS injection
     String index();
