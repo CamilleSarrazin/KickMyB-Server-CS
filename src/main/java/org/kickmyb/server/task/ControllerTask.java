@@ -46,11 +46,11 @@ public class ControllerTask {
         System.out.println("KICKB SERVER : Task list  with cookie");
         ConfigHTTP.attenteArticifielle();
         MUser user = currentUser();
-        return serviceTask.home(user.id);
+        return serviceTask.home(user.id); //des tâches dont la valeur booléenne isDeleted est false
     }
 
     @GetMapping("/api/detail/{id}")
-    public @ResponseBody TaskDetailResponse detail(@PathVariable long id) {
+    public @ResponseBody TaskDetailResponse detail(@PathVariable Long id) {
         System.out.println("KICKB SERVER : Detail  with cookie ");
         ConfigHTTP.attenteArticifielle();
         MUser user = currentUser();
@@ -66,11 +66,11 @@ public class ControllerTask {
     }
 
     @PostMapping(value = "/api/delete/{id}", produces = "text/plain")
-    public @ResponseBody String softDeleteTask(@PathVariable long id){
+    public @ResponseBody String softDeleteTask(@PathVariable Long id){
         System.out.println("KICKB SERVER : Soft delete with cookie ");
         ConfigHTTP.attenteArticifielle();
         MUser user = currentUser();
-        serviceTask.softDeleteTask(id, user);
+        serviceTask.softDeleteTask(id, user); //simplement changer la valeur du booléen isDeleted à true
         return "";
     }
 

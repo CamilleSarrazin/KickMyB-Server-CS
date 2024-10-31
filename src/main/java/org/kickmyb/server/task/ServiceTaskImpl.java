@@ -80,7 +80,7 @@ public class ServiceTaskImpl implements ServiceTask {
 
     @Override
     public void updateProgress(long taskID, int value) {
-        MTask element = repo.findById(taskID).get();
+        MTask element = repo.findById(Long.valueOf(taskID)).get();
         // TODO validate value is between 0 and 100
         MProgressEvent pe= new MProgressEvent();
         pe.resultPercentage = value;
@@ -102,7 +102,6 @@ public class ServiceTaskImpl implements ServiceTask {
             r.deadline = t.deadline;
             r.percentageTimeSpent = percentage(t.creationDate, new Date(), t.deadline);
             r.name = t.name;
-            t.isActive = true;
             res.add(r);
         }
         return res;
@@ -139,16 +138,16 @@ public class ServiceTaskImpl implements ServiceTask {
         List<HomeItemPhotoResponse> res = new ArrayList<>();
         for (MTask t : user.tasks) {
             HomeItemPhotoResponse r = new HomeItemPhotoResponse();
+            //condition if isDeleted = false
             r.id = t.id;
             r.percentageDone = percentageDone(t);
             r.deadline = t.deadline;
             r.percentageTimeSpent = percentage(t.creationDate, new Date(), t.deadline);
             r.name = t.name;
-            t.isActive = true;
             if(t.photo != null) {
                 r.photoId = t.photo.id;
             } else {
-                r.photoId = 0L;
+                r.photoId = (Long) 0L;
             }
             res.add(r);
         }
@@ -161,7 +160,7 @@ public class ServiceTaskImpl implements ServiceTask {
         MTask element = user.tasks.stream().filter(elt -> elt.id == id).findFirst().get();
 
         if(element != null){
-            element.isActive = false;
+            //element.isDeleted = true;
             user.tasks.remove(element);
             repoUser.save(user);
             System.out.println(user.tasks);
@@ -189,7 +188,7 @@ public class ServiceTaskImpl implements ServiceTask {
         if(element.photo != null) {
             response.photoId = element.photo.id;
         } else {
-            response.photoId = 0L;
+            response.photoId = (Long) 0L;
         }
 
         return response;

@@ -17,7 +17,8 @@ public class MTask {
     public Long id;
     public Date creationDate;
     public Date deadline;
-    public Boolean isActive;
+    //à la place de supprimer la tâche de la liste d'un utilisateur, on lui assigne une valeur booléenne
+    //public Boolean isdeleted; //à false de base
 
     @Convert(converter = AttributeEncryptor.class)  // TODO exemple stupide, servirait plutôt pour NAS ou numero carte crédit
     public String name;
